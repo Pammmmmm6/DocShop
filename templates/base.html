@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>La boutique d'Erevan</title>
+</head>
+<body>
+
+<a href="{% url 'index' %}">
+    <h1>La boutique d'Erevan</h1>
+</a>
+
+{% if user.is_authenticated %}
+    {{ user.email }}
+<a href="{% url 'accounts:profile' %}">Mon profil</a>
+<a href="{% url 'accounts:logout' %}">Déconnexion</a>
+{% else %}
+    <a href="{% url 'accounts:signup' %}">S'inscrire</a>
+    <a href="{% url 'accounts:login' %}">Connexion</a>
+{% endif %}
+
+{% if user.cart and not user.cart.ordered %}
+<p>
+    <a href="{% url 'store:cart' %}">Voir le panier({{ user.cart.orders.count }})</a>
+</p>
+{% endif %}
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
